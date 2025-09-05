@@ -1,6 +1,6 @@
-# Fredrik's Personal Website
+# Claire's Personal Website
 
-A simple Go web server that serves Fredrik's personal blog homepage. Displays the current date and a welcome message.
+A simple Go web server that serves Claire's homepage.
 
 ## Running locally
 
