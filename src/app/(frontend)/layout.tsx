@@ -1,10 +1,10 @@
-import React from 'react'
+import type { Metadata } from 'next'
+import type React from 'react'
 import './globals.css'
-import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  description: 'A blank template using Payload in a Next.js app.',
-  title: 'Payload Blank Template',
+  description: "Claire Foody's personal website",
+  title: 'Claire Foody',
 }
 
 export default async function RootLayout(props: { children: React.ReactNode }) {
