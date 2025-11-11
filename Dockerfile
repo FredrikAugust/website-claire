@@ -30,6 +30,17 @@ COPY . .
 # Uncomment the following line in case you want to disable telemetry during the build.
 # ENV NEXT_TELEMETRY_DISABLED 1
 
+# Set build-time environment variables required by Payload CMS
+# These are dummy values used only for the build process
+ENV DATABASE_URI=postgres://postgres:postgres@localhost:5432/cms
+ENV PAYLOAD_SECRET=build-time-secret-replace-at-runtime
+ENV S3_BUCKET=upload
+ENV S3_ACCESS_KEY_ID=build-dummy
+ENV S3_SECRET_ACCESS_KEY=build-dummy
+ENV S3_REGION=us-east-1
+ENV S3_ENDPOINT=http://localhost:9000
+ENV SERVER_URL=http://localhost:3000
+
 RUN \
   if [ -f yarn.lock ]; then yarn run build; \
   elif [ -f package-lock.json ]; then npm run build; \
@@ -47,9 +58,6 @@ ENV NODE_ENV production
 
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
-
-# Remove this line if you do not have this folder
-COPY --from=builder /app/public ./public
 
 # Set the correct permission for prerender cache
 RUN mkdir .next
