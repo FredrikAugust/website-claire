@@ -8,13 +8,7 @@ const nextConfig = {
   // Your Next.js config here
   output: 'standalone',
   images: {
-    remotePatterns: [
-      {
-        protocol: host.protocol.slice(0, -1),
-        hostname: host.hostname,
-        pathname: '/api/media/file/**',
-      },
-    ],
+    remotePatterns: [new URL(`${process.env.SERVER_URL}/**`)],
   },
   webpack: (webpackConfig) => {
     webpackConfig.resolve.extensionAlias = {

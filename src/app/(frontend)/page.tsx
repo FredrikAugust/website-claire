@@ -43,7 +43,14 @@ export default async function HomePage() {
     <main className="flex flex-col items-center gap-8 lg:gap-12 py-10 md:pt-20 py:mt-20 ">
       <header className="container max-w-[75ch] flex flex-col md:flex-row md:items-center gap-8 px-4">
         <div className="h-40 w-30 relative shrink-0">
-          <Image className="object-cover" src={heroImage.url!} fill={true} alt={heroImage.alt} />
+          <Image
+            className="object-cover"
+            sizes="50vw"
+            src={heroImage.url!}
+            priority
+            fill={true}
+            alt={heroImage.alt}
+          />
         </div>
         <div className="flex flex-col gap-1">
           <h1 className={'text-3xl font-sans'}>{home.hero.title}</h1>
@@ -102,6 +109,7 @@ export default async function HomePage() {
             src={contactImage.url!}
             alt={contactImage.alt}
             className="object-cover"
+            sizes="50vw"
             fill={true}
           />
         </div>
