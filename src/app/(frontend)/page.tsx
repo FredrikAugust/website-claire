@@ -7,16 +7,15 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { cn } from '@/lib/utils'
 import type { Media } from '@/payload-types'
 import configPromise from '@payload-config'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 import type { Metadata } from 'next'
-import localFont from 'next/font/local'
 import Image from 'next/image'
-import Link from 'next/link'
 import { getPayload } from 'payload'
 import PhotoCarousel from './PhotoCarousel'
+
+export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
   description: "Claire Foody's personal website",
