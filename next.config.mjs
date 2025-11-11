@@ -1,6 +1,7 @@
 import { withPayload } from '@payloadcms/next/withPayload'
 
 const s3 = new URL(process.env.S3_ENDPOINT)
+const host = new URL(process.env.SERVER_URL)
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -9,8 +10,8 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: s3.protocol.slice(0, -1),
-        hostname: s3.hostname,
+        protocol: host.protocol.slice(0, -1),
+        hostname: host.hostname,
         pathname: '/api/media/file/**',
       },
     ],
