@@ -1,18 +1,11 @@
-import { Button } from '@/components/ui/button'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
 import type { Media } from '@/payload-types'
 import configPromise from '@payload-config'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import { getPayload } from 'payload'
+import { Suspense } from 'react'
+import { Installations } from './Installations'
 import PhotoCarousel from './PhotoCarousel'
 
 export const dynamic = 'force-dynamic'
@@ -29,11 +22,6 @@ export default async function HomePage() {
 
   const home = await payload.findGlobal({
     slug: 'home',
-  })
-
-  const installations = await payload.find({
-    collection: 'installations',
-    sort: 'index',
   })
 
   const heroImage = home.hero.image as Media
@@ -67,29 +55,9 @@ export default async function HomePage() {
 
       <section className="container max-w-[75ch] flex flex-col gap-4 px-4">
         <h2 className={'text-2xl font-sans'}>Installations</h2>
-        <div className="flex flex-col gap-4 md:gap-8">
-          {installations.docs.map((installation) => {
-            return (
-              <Card key={installation.title}>
-                <CardHeader>
-                  <CardTitle className="font-sans">{installation.title}</CardTitle>
-                  <CardDescription>{installation.subtitle}</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <RichText
-                    className="font-serif [&_a]:underline text-justify"
-                    data={installation.summary}
-                  />
-                </CardContent>
-                <CardFooter>
-                  <Button size="sm" variant="outline">
-                    Link
-                  </Button>
-                </CardFooter>
-              </Card>
-            )
-          })}
-        </div>
+        <Suspense>
+          <Installations />
+        </Suspense>
       </section>
 
       <section className="container max-w-[75ch] flex gap-8 md:gap-24 justify-between flex-col md:flex-row md:items-center px-4">

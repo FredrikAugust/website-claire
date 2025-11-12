@@ -171,6 +171,9 @@ export interface Media {
  */
 export interface Installation {
   id: number;
+  /**
+   * A lower number will make this appear higher in the list of installations.
+   */
   index?: number | null;
   title: string;
   subtitle: string;
@@ -189,6 +192,16 @@ export interface Installation {
     };
     [k: string]: unknown;
   };
+  /**
+   * Additional files the visitor can download. Such as slide decks.
+   */
+  files?:
+    | {
+        title: string;
+        file: number | Media;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -320,6 +333,13 @@ export interface InstallationsSelect<T extends boolean = true> {
   title?: T;
   subtitle?: T;
   summary?: T;
+  files?:
+    | T
+    | {
+        title?: T;
+        file?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }

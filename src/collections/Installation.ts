@@ -5,12 +5,14 @@ export const Installation: CollectionConfig = {
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['title', 'subtitle'],
-    livePreview: { url: '/' },
   },
   fields: [
     {
       name: 'index',
       label: 'Index',
+      admin: {
+        description: 'A lower number will make this appear higher in the list of installations.',
+      },
       type: 'number',
       index: true,
       defaultValue: 0,
@@ -31,6 +33,26 @@ export const Installation: CollectionConfig = {
       name: 'summary',
       type: 'richText',
       required: true,
+    },
+    {
+      name: 'files',
+      type: 'array',
+      admin: {
+        description: 'Additional files the visitor can download. Such as slide decks.',
+      },
+      fields: [
+        {
+          name: 'title',
+          type: 'text',
+          required: true,
+        },
+        {
+          name: 'file',
+          type: 'upload',
+          relationTo: 'media',
+          required: true,
+        },
+      ],
     },
   ],
 }
