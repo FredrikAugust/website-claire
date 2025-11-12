@@ -1,14 +1,14 @@
 import { withPayload } from '@payloadcms/next/withPayload'
 
-const s3 = new URL(process.env.S3_ENDPOINT)
-const host = new URL(process.env.SERVER_URL)
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   // Your Next.js config here
   output: 'standalone',
   images: {
-    remotePatterns: [new URL(`${process.env.SERVER_URL}/**`)],
+    remotePatterns: [
+      new URL('http://localhost:3000/api/media/file/**'),
+      new URL('https://clairefoody.com/api/media/file/**'),
+    ],
   },
   webpack: (webpackConfig) => {
     webpackConfig.resolve.extensionAlias = {
