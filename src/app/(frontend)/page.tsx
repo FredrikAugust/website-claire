@@ -29,11 +29,11 @@ export default async function HomePage() {
 
   const home = await payload.findGlobal({
     slug: 'home',
-    depth: 1,
   })
 
   const installations = await payload.find({
     collection: 'installations',
+    sort: 'index',
   })
 
   const heroImage = home.hero.image as Media

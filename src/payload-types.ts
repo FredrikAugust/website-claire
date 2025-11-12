@@ -171,6 +171,7 @@ export interface Media {
  */
 export interface Installation {
   id: number;
+  index?: number | null;
   title: string;
   subtitle: string;
   summary: {
@@ -315,6 +316,7 @@ export interface MediaSelect<T extends boolean = true> {
  * via the `definition` "installations_select".
  */
 export interface InstallationsSelect<T extends boolean = true> {
+  index?: T;
   title?: T;
   subtitle?: T;
   summary?: T;
