@@ -22,6 +22,9 @@ After you click the `Deploy` button above, you'll want to have standalone copy o
 3. `pnpm install && pnpm dev` to install dependencies and start the dev server
 4. open `http://localhost:3000` to open the app in your browser
 
+Postgres TLS certificate verification is currently disabled in app config
+(`rejectUnauthorized: false`).
+
 That's it! Changes made in `./src` will be reflected in your app. Follow the on-screen instructions to login and create your first admin user. Then check out [Production](#production) once you're ready to build and serve your app, and [Deployment](#deployment) when you're ready to go live.
 
 #### Docker (Optional)

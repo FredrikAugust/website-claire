@@ -1,5 +1,4 @@
 import path from 'node:path'
-import { readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
@@ -15,7 +14,6 @@ import { migrations } from './migrations'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
-const databaseCa = readFileSync(path.resolve(dirname, '../certs/rds-global-bundle.pem'), 'utf8')
 
 export default buildConfig({
   admin: {
@@ -36,8 +34,7 @@ export default buildConfig({
     pool: {
       connectionString: process.env.DATABASE_URI!,
       ssl: {
-        ca: databaseCa,
-        rejectUnauthorized: true,
+        rejectUnauthorized: false,
       },
     },
     prodMigrations: migrations,
