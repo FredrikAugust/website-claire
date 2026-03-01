@@ -15,21 +15,7 @@ import { migrations } from './migrations'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
-const s3Endpoint = process.env.S3_ENDPOINT ?? 'http://localhost:9000'
-const databaseCaFromFilePath = path.resolve(dirname, '../certs/rds-global-bundle.pem')
-const databaseCaFromEnv = process.env.DATABASE_CA_CERT?.replace(/\\n/g, '\n')
-const databaseCaFromFile = (() => {
-  try {
-    return readFileSync(databaseCaFromFilePath, 'utf8')
-  } catch {
-    return undefined
-  }
-})()
-const databaseCa = databaseCaFromFile ?? databaseCaFromEnv
-const databaseUri = process.env.DATABASE_URI || ''
-const databaseConnectionString = databaseUri
-  .replace(/([?&])sslmode=[^&]*&?/i, '$1')
-  .replace(/[?&]$/, '')
+const databaseCa = readFileSync(path.resolve(dirname, '../certs/rds-global-bundle.pem'), 'utf8')
 
 export default buildConfig({
   admin: {
@@ -48,13 +34,11 @@ export default buildConfig({
   },
   db: postgresAdapter({
     pool: {
-      connectionString: databaseConnectionString,
-      ssl: databaseCa
-        ? {
-            ca: databaseCa,
-            rejectUnauthorized: true,
-          }
-        : undefined,
+      connectionString: process.env.DATABASE_URI!,
+      ssl: {
+        ca: databaseCa,
+        rejectUnauthorized: true,
+      },
     },
     prodMigrations: migrations,
     migrationDir: path.resolve(dirname, 'migrations'),
@@ -69,8 +53,6 @@ export default buildConfig({
       },
       bucket: process.env.S3_BUCKET!,
       config: {
-        endpoint: s3Endpoint,
-        forcePathStyle: s3Endpoint.startsWith('http://localhost:9000'), // if we're using minio for local testing
         credentials: {
           accessKeyId: process.env.S3_ACCESS_KEY_ID!,
           secretAccessKey: process.env.S3_SECRET_ACCESS_KEY!,
