@@ -49,7 +49,7 @@ export async function Installations() {
                     const f = file.file as Media
                     return (
                       <Button asChild size="sm" variant="outline" key={file.title}>
-                        <Link href={f.url!} target="_blank" rel="noreferer">
+                        <Link href={f.url!} target="_blank" rel="noreferrer">
                           <Paperclip />
                           {file.title}
                         </Link>

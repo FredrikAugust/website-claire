@@ -11,8 +11,10 @@ import PhotoCarousel from './PhotoCarousel'
 export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
-  description: "Claire Foody's personal website",
-  title: 'Claire Foody',
+  title: 'Home',
+  alternates: {
+    canonical: '/',
+  },
 }
 
 export default async function HomePage() {
@@ -28,7 +30,7 @@ export default async function HomePage() {
   const contactImage = home.contact.image as Media
 
   return (
-    <main className="flex flex-col items-center gap-8 lg:gap-12 py-10 md:pt-20 py:mt-20 ">
+    <main className="flex flex-col items-center gap-8 py-10 lg:gap-12 md:pt-20">
       <header className="container max-w-[75ch] flex flex-col md:flex-row md:items-center gap-8 px-4">
         <div className="h-40 w-30 relative shrink-0">
           <Image

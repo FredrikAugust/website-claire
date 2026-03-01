@@ -18,7 +18,6 @@ export default function PhotoCarousel({ images }: { images: Media[] }) {
             <CarouselItem className="basis-1/3 md:basis-1/4 h-80" key={img.url!}>
               <div className="relative w-full h-full">
                 <Image
-                  loading="eager"
                   src={img.url!}
                   alt={img.alt}
                   className="object-cover"

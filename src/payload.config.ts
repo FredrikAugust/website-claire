@@ -14,6 +14,7 @@ import { migrations } from './migrations'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
+const s3Endpoint = process.env.S3_ENDPOINT ?? 'http://localhost:9000'
 
 export default buildConfig({
   admin: {
@@ -26,7 +27,7 @@ export default buildConfig({
   collections: [Users, Media, Installation],
   globals: [Home],
   editor: lexicalEditor(),
-  secret: process.env.PAYLOAD_SECRET!,
+  secret: process.env.PAYLOAD_SECRET || 'dev-secret-change-me',
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
@@ -47,8 +48,8 @@ export default buildConfig({
       },
       bucket: process.env.S3_BUCKET!,
       config: {
-        endpoint: process.env.S3_ENDPOINT!,
-        forcePathStyle: process.env.S3_ENDPOINT!.startsWith('http://localhost:9000'), // if we're using minio for local testing
+        endpoint: s3Endpoint,
+        forcePathStyle: s3Endpoint.startsWith('http://localhost:9000'), // if we're using minio for local testing
         credentials: {
           accessKeyId: process.env.S3_ACCESS_KEY_ID!,
           secretAccessKey: process.env.S3_SECRET_ACCESS_KEY!,
