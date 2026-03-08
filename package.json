@@ -6,7 +6,7 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "build": "cross-env NODE_OPTIONS=\"--no-deprecation --max-old-space-size=8000\" next build",
+    "build": "cross-env NODE_OPTIONS=\"--no-deprecation --max-old-space-size=8000\" payload migrate && next build",
     "dev": "cross-env NODE_OPTIONS=--no-deprecation next dev --turbopack",
     "devsafe": "rm -rf .next && cross-env NODE_OPTIONS=--no-deprecation next dev",
     "generate:importmap": "cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap",
@@ -32,8 +32,6 @@
     "clsx": "^2.1.1",
     "cross-env": "^7.0.3",
     "dotenv": "17.3.1",
-    "graphql": "^16.13.0",
-    "lucide-react": "^0.575.0",
     "next": "15.4.11",
     "payload": "3.78.0",
     "postcss": "^8.5.6",
@@ -61,6 +59,10 @@
     "pnpm": ">=10"
   },
   "pnpm": {
-    "onlyBuiltDependencies": ["sharp", "esbuild", "unrs-resolver"]
+    "onlyBuiltDependencies": [
+      "sharp",
+      "esbuild",
+      "unrs-resolver"
+    ]
   }
 }
