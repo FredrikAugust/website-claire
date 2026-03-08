@@ -20,11 +20,11 @@ export function MobileMenu({ artistName, links }: MobileMenuProps) {
         aria-label={open ? 'Close menu' : 'Open menu'}
       >
         <span
-          className={`block h-px w-6 bg-white transition-transform ${open ? 'translate-y-[3.5px] rotate-45' : ''}`}
+          className={`block h-px w-6 bg-black transition-transform ${open ? 'translate-y-[3.5px] rotate-45' : ''}`}
         />
-        <span className={`block h-px w-6 bg-white transition-opacity ${open ? 'opacity-0' : ''}`} />
+        <span className={`block h-px w-6 bg-black transition-opacity ${open ? 'opacity-0' : ''}`} />
         <span
-          className={`block h-px w-6 bg-white transition-transform ${open ? '-translate-y-[3.5px] -rotate-45' : ''}`}
+          className={`block h-px w-6 bg-black transition-transform ${open ? '-translate-y-[3.5px] -rotate-45' : ''}`}
         />
       </button>
 
