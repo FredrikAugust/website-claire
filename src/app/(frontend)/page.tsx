@@ -1,89 +1,46 @@
-import type { Media } from '@/payload-types'
+import { AboutPractice } from '@/components/AboutPractice'
+import { FeaturedWorks } from '@/components/FeaturedWorks'
+import { HeroVideo } from '@/components/HeroVideo'
+import type { Media as MediaType } from '@/payload-types'
 import configPromise from '@payload-config'
-import { RichText } from '@payloadcms/richtext-lexical/react'
 import type { Metadata } from 'next'
-import Image from 'next/image'
 import { getPayload } from 'payload'
-import { Suspense } from 'react'
-import { Installations } from './Installations'
-import PhotoCarousel from './PhotoCarousel'
 
 export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
-  title: 'Home',
+  title: 'Claire Foody',
   alternates: {
     canonical: '/',
   },
 }
 
 export default async function HomePage() {
-  const payload = await getPayload({
-    config: configPromise,
-  })
+  const payload = await getPayload({ config: configPromise })
 
-  const home = await payload.findGlobal({
-    slug: 'home',
-  })
+  const [home, worksResult] = await Promise.all([
+    payload.findGlobal({ slug: 'home' }),
+    payload.find({
+      collection: 'works',
+      where: { featured: { equals: true } },
+      sort: 'sortOrder',
+      limit: 3,
+    }),
+  ])
 
-  const heroImage = home.hero.image as Media
-  const contactImage = home.contact.image as Media
+  const heroVideo = home.hero?.video as MediaType | null
+  const fallbackImage = home.hero?.fallbackImage as MediaType | null
 
   return (
-    <main className="flex flex-col items-center gap-8 py-10 lg:gap-12 md:pt-20">
-      <header className="container max-w-[75ch] flex flex-col md:flex-row md:items-center gap-8 px-4">
-        <div className="h-40 w-30 relative shrink-0">
-          <Image
-            className="object-cover"
-            sizes="50vw"
-            src={heroImage.url!}
-            priority
-            fill={true}
-            alt={heroImage.alt}
-          />
-        </div>
-        <div className="flex flex-col gap-1">
-          <h1 className={'text-3xl font-sans'}>{home.hero.title}</h1>
-          <RichText className="font-serif" data={home.hero.description} />
-        </div>
-      </header>
-
-      <PhotoCarousel images={home.carousel as Media[]} />
-
-      <section className="container max-w-[75ch] flex flex-col gap-2 px-4">
-        <h2 className={'text-2xl font-sans'}>About me</h2>
-        <RichText className="font-serif text-justify" data={home.aboutMe.description} />
-      </section>
-
-      <section className="container max-w-[75ch] flex flex-col gap-4 px-4">
-        <h2 className={'text-2xl font-sans'}>Installations</h2>
-        <Suspense>
-          <Installations />
-        </Suspense>
-      </section>
-
-      <section className="container max-w-[75ch] flex gap-8 md:gap-24 justify-between flex-col md:flex-row md:items-center px-4">
-        <div className="flex flex-col gap-2">
-          <h2 className="text-2xl font-sans">Contact</h2>
-          <div className="grid grid-cols-[auto_auto] gap-x-4 gap-y-1">
-            <span className="font-medium">Phone</span>
-            <span>{home.contact.phone}</span>
-            <span className="font-medium">Email</span>
-            <a className="underline" href={`mailto:${home.contact.email}`}>
-              {home.contact.email}
-            </a>
-          </div>
-        </div>
-        <div className="aspect-3/1 relative size-full">
-          <Image
-            src={contactImage.url!}
-            alt={contactImage.alt}
-            className="object-cover"
-            sizes="50vw"
-            fill={true}
-          />
-        </div>
-      </section>
-    </main>
+    <>
+      <HeroVideo
+        video={heroVideo}
+        fallbackImage={fallbackImage}
+        title={home.hero?.title}
+        descriptor={home.hero?.descriptor}
+      />
+      <FeaturedWorks works={worksResult.docs} />
+      <AboutPractice quote={home.aboutPractice?.quote} body={home.aboutPractice?.body} />
+    </>
   )
 }

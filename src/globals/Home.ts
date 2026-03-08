@@ -6,57 +6,41 @@ export const Home: GlobalConfig = {
     {
       name: 'hero',
       type: 'group',
-      required: true,
       fields: [
-        { name: 'title', type: 'text', required: true },
-        { name: 'description', type: 'richText', required: true },
         {
-          name: 'image',
+          name: 'video',
           type: 'upload',
           relationTo: 'media',
-          required: true,
+          admin: {
+            description: 'MP4 video for hero background.',
+          },
         },
+        {
+          name: 'fallbackImage',
+          type: 'upload',
+          relationTo: 'media',
+          admin: {
+            description: 'Poster/fallback image when video is unavailable.',
+          },
+        },
+        { name: 'title', type: 'text' },
+        { name: 'descriptor', type: 'text' },
       ],
     },
     {
-      name: 'carousel',
-      type: 'upload',
-      hasMany: true,
-      relationTo: 'media',
-      required: true,
-    },
-    {
-      name: 'aboutMe',
+      name: 'aboutPractice',
       type: 'group',
-      required: true,
       fields: [
         {
-          name: 'description',
+          name: 'quote',
+          type: 'textarea',
+          admin: {
+            description: 'Blockquote text for homepage about section.',
+          },
+        },
+        {
+          name: 'body',
           type: 'richText',
-          required: true,
-        },
-      ],
-    },
-    {
-      name: 'contact',
-      type: 'group',
-      required: true,
-      fields: [
-        {
-          name: 'phone',
-          type: 'text',
-          required: true,
-        },
-        {
-          name: 'email',
-          type: 'email',
-          required: true,
-        },
-        {
-          name: 'image',
-          type: 'upload',
-          relationTo: 'media',
-          required: true,
         },
       ],
     },

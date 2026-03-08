@@ -6,10 +6,14 @@ import { s3Storage } from '@payloadcms/storage-s3'
 import { buildConfig } from 'payload'
 import sharp from 'sharp'
 
-import { Installation } from './collections/Installation'
 import { Media } from './collections/Media'
 import { Users } from './collections/Users'
+import { Work } from './collections/Work'
+import { About } from './globals/About'
+import { CV } from './globals/CV'
+import { Contact } from './globals/Contact'
 import { Home } from './globals/Home'
+import { SiteSettings } from './globals/SiteSettings'
 import { migrations } from './migrations'
 
 const filename = fileURLToPath(import.meta.url)
@@ -23,8 +27,8 @@ export default buildConfig({
     },
   },
   serverURL: process.env.SERVER_URL!,
-  collections: [Users, Media, Installation],
-  globals: [Home],
+  collections: [Users, Media, Work],
+  globals: [Home, SiteSettings, About, CV, Contact],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || 'dev-secret-change-me',
   typescript: {
