@@ -1,15 +1,22 @@
 'use client'
 
-import type { Media, Work } from '@/payload-types'
 import { motion } from 'motion/react'
 import Image from 'next/image'
 import Link from 'next/link'
 
-export function WorkCard({ work }: { work: Work }) {
-  const thumbnail = work.thumbnailImage as Media | null
-  const hero = work.heroImage as Media | null
-  const image = thumbnail || hero
+export interface WorkCardData {
+  id: number
+  slug: string
+  title: string
+  year: number
+  category: string
+  medium?: string | null
+  venue?: string | null
+  imageUrl?: string | null
+  imageAlt?: string
+}
 
+export function WorkCard({ work }: { work: WorkCardData }) {
   return (
     <motion.div
       variants={{
@@ -18,11 +25,11 @@ export function WorkCard({ work }: { work: Work }) {
       }}
     >
       <Link href={`/works/${work.slug}`} className="group block">
-        {image?.url && (
+        {work.imageUrl && (
           <div className="aspect-4/3 relative overflow-hidden bg-secondary mb-4">
             <Image
-              src={image.url}
-              alt={image.alt}
+              src={work.imageUrl}
+              alt={work.imageAlt ?? work.title}
               fill
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               className="object-cover transition-transform duration-500 group-hover:scale-[1.02]"

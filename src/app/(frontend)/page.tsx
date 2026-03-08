@@ -1,10 +1,10 @@
 import { AboutPractice } from '@/components/AboutPractice'
 import { FeaturedWorks } from '@/components/FeaturedWorks'
 import { HeroVideo } from '@/components/HeroVideo'
+import { mapWorkToCard } from '@/lib/mapWorkToCard'
+import { getPayloadClient } from '@/lib/payload'
 import type { Media as MediaType } from '@/payload-types'
-import configPromise from '@payload-config'
 import type { Metadata } from 'next'
-import { getPayload } from 'payload'
 
 export const dynamic = 'force-dynamic'
 
@@ -16,15 +16,26 @@ export const metadata: Metadata = {
 }
 
 export default async function HomePage() {
-  const payload = await getPayload({ config: configPromise })
+  const payload = await getPayloadClient()
 
   const [home, worksResult] = await Promise.all([
-    payload.findGlobal({ slug: 'home' }),
+    payload.findGlobal({ slug: 'home', depth: 1 }),
     payload.find({
       collection: 'works',
       where: { featured: { equals: true } },
       sort: 'sortOrder',
       limit: 3,
+      depth: 1,
+      select: {
+        title: true,
+        slug: true,
+        year: true,
+        category: true,
+        medium: true,
+        venue: true,
+        thumbnailImage: true,
+        heroImage: true,
+      },
     }),
   ])
 
@@ -34,12 +45,14 @@ export default async function HomePage() {
   return (
     <>
       <HeroVideo
-        video={heroVideo}
-        fallbackImage={fallbackImage}
+        videoUrl={heroVideo?.url}
+        videoMimeType={heroVideo?.mimeType}
+        fallbackImageUrl={fallbackImage?.url}
+        fallbackImageAlt={fallbackImage?.alt}
         title={home.hero?.title}
         descriptor={home.hero?.descriptor}
       />
-      <FeaturedWorks works={worksResult.docs} />
+      <FeaturedWorks works={worksResult.docs.map(mapWorkToCard)} />
       <AboutPractice quote={home.aboutPractice?.quote} body={home.aboutPractice?.body} />
     </>
   )

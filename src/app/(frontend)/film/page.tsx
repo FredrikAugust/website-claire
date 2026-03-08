@@ -1,7 +1,7 @@
 import { WorksGrid } from '@/components/WorksGrid'
-import configPromise from '@payload-config'
+import { mapWorkToCard } from '@/lib/mapWorkToCard'
+import { getPayloadClient } from '@/lib/payload'
 import type { Metadata } from 'next'
-import { getPayload } from 'payload'
 
 export const dynamic = 'force-dynamic'
 
@@ -13,14 +13,25 @@ export const metadata: Metadata = {
 }
 
 export default async function FilmPage() {
-  const payload = await getPayload({ config: configPromise })
+  const payload = await getPayloadClient()
 
   const works = await payload.find({
     collection: 'works',
     where: { category: { equals: 'film' } },
     sort: 'sortOrder',
     limit: 100,
+    depth: 1,
+    select: {
+      title: true,
+      slug: true,
+      year: true,
+      category: true,
+      medium: true,
+      venue: true,
+      thumbnailImage: true,
+      heroImage: true,
+    },
   })
 
-  return <WorksGrid works={works.docs} title="Film" />
+  return <WorksGrid works={works.docs.map(mapWorkToCard)} title="Film" />
 }

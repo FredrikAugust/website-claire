@@ -1,9 +1,8 @@
 import { Footer } from '@/components/Footer'
 import { Navigation } from '@/components/Navigation'
-import configPromise from '@payload-config'
+import { getPayloadClient } from '@/lib/payload'
 import type { Metadata } from 'next'
 import { Bodoni_Moda, Karla } from 'next/font/google'
-import { getPayload } from 'payload'
 import type React from 'react'
 import './globals.css'
 
@@ -44,8 +43,11 @@ export const metadata: Metadata = {
 export default async function RootLayout(props: { children: React.ReactNode }) {
   const { children } = props
 
-  const payload = await getPayload({ config: configPromise })
-  const siteSettings = await payload.findGlobal({ slug: 'site-settings' })
+  const payload = await getPayloadClient()
+  const siteSettings = await payload.findGlobal({
+    slug: 'site-settings',
+    depth: 0,
+  })
 
   return (
     <html lang="en" className={`${bodoniModa.variable} ${karla.variable}`}>

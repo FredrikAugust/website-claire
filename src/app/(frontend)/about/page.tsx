@@ -1,10 +1,9 @@
 import { FadeIn } from '@/components/motion/FadeIn'
+import { getPayloadClient } from '@/lib/payload'
 import type { Media } from '@/payload-types'
-import configPromise from '@payload-config'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 import type { Metadata } from 'next'
 import Image from 'next/image'
-import { getPayload } from 'payload'
 
 export const dynamic = 'force-dynamic'
 
@@ -16,8 +15,8 @@ export const metadata: Metadata = {
 }
 
 export default async function AboutPage() {
-  const payload = await getPayload({ config: configPromise })
-  const about = await payload.findGlobal({ slug: 'about' })
+  const payload = await getPayloadClient()
+  const about = await payload.findGlobal({ slug: 'about', depth: 1 })
   const portrait = about.portrait as Media | null
 
   return (

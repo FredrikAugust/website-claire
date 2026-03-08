@@ -5,6 +5,14 @@ export const Media: CollectionConfig = {
   access: {
     read: () => true,
   },
+  defaultPopulate: {
+    url: true,
+    alt: true,
+    width: true,
+    height: true,
+    mimeType: true,
+    filename: true,
+  },
   fields: [
     {
       name: 'alt',

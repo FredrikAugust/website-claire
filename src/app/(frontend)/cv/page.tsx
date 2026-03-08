@@ -1,8 +1,7 @@
 import { CVSection } from '@/components/CVSection'
 import { FadeIn } from '@/components/motion/FadeIn'
-import configPromise from '@payload-config'
+import { getPayloadClient } from '@/lib/payload'
 import type { Metadata } from 'next'
-import { getPayload } from 'payload'
 
 export const dynamic = 'force-dynamic'
 
@@ -14,8 +13,8 @@ export const metadata: Metadata = {
 }
 
 export default async function CVPage() {
-  const payload = await getPayload({ config: configPromise })
-  const cv = await payload.findGlobal({ slug: 'cv' })
+  const payload = await getPayloadClient()
+  const cv = await payload.findGlobal({ slug: 'cv', depth: 0 })
 
   return (
     <section className="mx-auto max-w-7xl px-6 py-24">

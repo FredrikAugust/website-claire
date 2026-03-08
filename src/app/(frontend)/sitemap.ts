@@ -1,14 +1,19 @@
-import configPromise from '@payload-config'
+import { getPayloadClient } from '@/lib/payload'
 import type { MetadataRoute } from 'next'
-import { getPayload } from 'payload'
 
 export const revalidate = 3600
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = process.env.SERVER_URL ?? 'http://localhost:3000'
 
-  const payload = await getPayload({ config: configPromise })
-  const works = await payload.find({ collection: 'works', limit: 1000 })
+  const payload = await getPayloadClient()
+  const works = await payload.find({
+    collection: 'works',
+    limit: 1000,
+    depth: 0,
+    pagination: false,
+    select: { slug: true, updatedAt: true },
+  })
 
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: baseUrl, lastModified: new Date(), changeFrequency: 'weekly', priority: 1 },

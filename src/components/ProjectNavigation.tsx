@@ -1,8 +1,7 @@
-import type { Work } from '@/payload-types'
 import Link from 'next/link'
 
 interface ProjectNavigationProps {
-  nextWork?: Work | null
+  nextWork?: { title: string; slug: string } | null
   category?: string
 }
 

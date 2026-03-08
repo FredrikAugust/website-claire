@@ -1,9 +1,8 @@
-import type { Work } from '@/payload-types'
-import { WorkCard } from './WorkCard'
+import { WorkCard, type WorkCardData } from './WorkCard'
 import { StaggerChildren } from './motion/StaggerChildren'
 
 interface WorksGridProps {
-  works: Work[]
+  works: WorkCardData[]
   title: string
   description?: string
 }

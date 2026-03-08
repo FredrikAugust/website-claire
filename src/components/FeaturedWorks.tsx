@@ -1,10 +1,9 @@
-import type { Work } from '@/payload-types'
 import Link from 'next/link'
-import { WorkCard } from './WorkCard'
+import { WorkCard, type WorkCardData } from './WorkCard'
 import { FadeIn } from './motion/FadeIn'
 import { StaggerChildren } from './motion/StaggerChildren'
 
-export function FeaturedWorks({ works }: { works: Work[] }) {
+export function FeaturedWorks({ works }: { works: WorkCardData[] }) {
   if (!works.length) return null
 
   return (

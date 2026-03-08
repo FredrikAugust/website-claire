@@ -29,6 +29,7 @@ export default buildConfig({
   serverURL: process.env.SERVER_URL!,
   collections: [Users, Media, Work],
   globals: [Home, SiteSettings, About, CV, Contact],
+  maxDepth: 2,
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || 'dev-secret-change-me',
   typescript: {

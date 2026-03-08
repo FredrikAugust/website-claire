@@ -1,8 +1,7 @@
 import { FadeIn } from '@/components/motion/FadeIn'
 import { StaggerChildren } from '@/components/motion/StaggerChildren'
-import configPromise from '@payload-config'
+import { getPayloadClient } from '@/lib/payload'
 import type { Metadata } from 'next'
-import { getPayload } from 'payload'
 
 export const dynamic = 'force-dynamic'
 
@@ -14,11 +13,14 @@ export const metadata: Metadata = {
 }
 
 export default async function ContactPage() {
-  const payload = await getPayload({ config: configPromise })
+  const payload = await getPayloadClient()
 
   const [contact, siteSettings] = await Promise.all([
-    payload.findGlobal({ slug: 'contact' }),
-    payload.findGlobal({ slug: 'site-settings' }),
+    payload.findGlobal({ slug: 'contact', depth: 0 }),
+    payload.findGlobal({
+      slug: 'site-settings',
+      depth: 0,
+    }),
   ])
 
   return (

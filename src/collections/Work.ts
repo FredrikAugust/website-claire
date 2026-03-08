@@ -33,6 +33,7 @@ export const Work: CollectionConfig = {
       type: 'text',
       required: true,
       unique: true,
+      index: true,
       admin: {
         description: 'Auto-generated from title if left empty.',
       },
