@@ -22,7 +22,7 @@ export function HeroVideo({
           loop
           playsInline
           poster={fallbackImageUrl ?? undefined}
-          className="absolute inset-0 h-full w-full object-cover"
+          className="absolute inset-0 h-full w-full object-cover grayscale"
         >
           <source src={videoUrl} type={videoMimeType ?? 'video/mp4'} />
         </video>
@@ -31,7 +31,7 @@ export function HeroVideo({
           src={fallbackImageUrl}
           alt={fallbackImageAlt ?? ''}
           fill
-          className="object-cover"
+          className="object-cover grayscale"
           priority
         />
       ) : null}
