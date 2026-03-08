@@ -51,9 +51,9 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
 
   return (
     <html lang="en" className={`${bodoniModa.variable} ${karla.variable}`}>
-      <body>
+      <body className="bg-foreground">
         <Navigation artistName={siteSettings.artistName} />
-        <main className="min-h-screen">{children}</main>
+        <main className="bg-background">{children}</main>
         <Footer siteSettings={siteSettings} />
       </body>
     </html>

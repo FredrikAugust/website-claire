@@ -1,7 +1,19 @@
 import type { WorkCardData } from '@/components/WorkCard'
-import type { Media, Work } from '@/payload-types'
+import type { Media } from '@/payload-types'
 
-export function mapWorkToCard(work: Work): WorkCardData {
+interface WorkForCard {
+  id: number
+  slug: string
+  title: string
+  year: number
+  category: string
+  medium?: string | null
+  venue?: string | null
+  thumbnailImage?: number | Media | null
+  heroImage?: number | Media | null
+}
+
+export function mapWorkToCard(work: WorkForCard): WorkCardData {
   const thumbnail = work.thumbnailImage as Media | null
   const hero = work.heroImage as Media | null
   const image = thumbnail || hero

@@ -12,9 +12,9 @@ const navLinks = [
 
 export function Navigation({ artistName }: { artistName: string }) {
   return (
-    <nav className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border/50">
+    <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md border-b border-foreground/5">
       <div className="mx-auto max-w-7xl flex items-center justify-between px-6 py-4">
-        <Link href="/" className="font-heading text-xl tracking-tight">
+        <Link href="/" className="font-heading text-xl tracking-tight text-white">
           {artistName}
         </Link>
 

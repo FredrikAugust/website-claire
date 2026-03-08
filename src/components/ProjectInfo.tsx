@@ -29,7 +29,6 @@ export function ProjectInfo({ work }: { work: Work }) {
           {work.description && (
             <FadeIn>
               <div className="prose prose-lg max-w-none text-foreground/80 leading-relaxed">
-                {/* @ts-expect-error -- Payload richText data type mismatch */}
                 <RichText data={work.description} />
               </div>
             </FadeIn>

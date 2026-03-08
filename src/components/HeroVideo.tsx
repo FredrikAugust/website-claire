@@ -18,7 +18,7 @@ export function HeroVideo({
   descriptor,
 }: HeroVideoProps) {
   return (
-    <section className="relative h-[80vh] w-full overflow-hidden bg-foreground">
+    <section className="relative h-screen w-full overflow-hidden bg-foreground">
       {videoUrl ? (
         <video
           autoPlay

@@ -1,9 +1,10 @@
+import type { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 import { FadeIn } from './motion/FadeIn'
 
 interface AboutPracticeProps {
   quote?: string | null
-  body?: Record<string, unknown> | null
+  body?: SerializedEditorState | null
 }
 
 export function AboutPractice({ quote, body }: AboutPracticeProps) {
@@ -22,7 +23,6 @@ export function AboutPractice({ quote, body }: AboutPracticeProps) {
         {body && (
           <FadeIn delay={0.2}>
             <div className="mt-12 max-w-2xl text-muted-foreground leading-relaxed">
-              {/* @ts-expect-error -- Payload richText data type mismatch */}
               <RichText data={body} />
             </div>
           </FadeIn>

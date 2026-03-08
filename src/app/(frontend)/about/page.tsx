@@ -48,7 +48,6 @@ export default async function AboutPage() {
           {about.bio && (
             <FadeIn delay={0.2}>
               <div className="text-foreground/80 leading-relaxed space-y-4">
-                {/* @ts-expect-error -- Payload richText data type mismatch */}
                 <RichText data={about.bio} />
               </div>
             </FadeIn>
@@ -64,7 +63,6 @@ export default async function AboutPage() {
           {about.approach.content && (
             <FadeIn delay={0.1}>
               <div className="text-foreground/80 leading-relaxed">
-                {/* @ts-expect-error -- Payload richText data type mismatch */}
                 <RichText data={about.approach.content} />
               </div>
             </FadeIn>
