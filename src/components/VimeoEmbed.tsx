@@ -9,6 +9,7 @@ export function VimeoEmbed({ url }: { url: string }) {
         className="absolute inset-0 w-full h-full"
         allow="autoplay; fullscreen; picture-in-picture"
         allowFullScreen
+        loading="lazy"
         title="Video"
       />
     </div>

@@ -1,9 +1,7 @@
-import { FadeIn } from '@/components/motion/FadeIn'
-import { StaggerChildren } from '@/components/motion/StaggerChildren'
 import { getPayloadClient } from '@/lib/payload'
 import type { Metadata } from 'next'
 
-export const dynamic = 'force-dynamic'
+export const revalidate = 60
 
 export const metadata: Metadata = {
   title: 'Contact',
@@ -25,17 +23,15 @@ export default async function ContactPage() {
 
   return (
     <section className="mx-auto max-w-4xl px-6 py-24">
-      <FadeIn>
-        <h1 className="font-heading text-4xl md:text-5xl tracking-tight mb-6">
-          {contact.heading || 'Contact'}
-        </h1>
-        {contact.description && (
-          <p className="text-lg text-muted-foreground max-w-2xl mb-16">{contact.description}</p>
-        )}
-      </FadeIn>
+      <h1 className="font-heading text-4xl md:text-5xl tracking-tight mb-6">
+        {contact.heading || 'Contact'}
+      </h1>
+      {contact.description && (
+        <p className="text-lg text-muted-foreground max-w-2xl mb-16">{contact.description}</p>
+      )}
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
-        <FadeIn delay={0.1}>
+        <div>
           <div className="space-y-6">
             <h2 className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
               Get in Touch
@@ -76,10 +72,10 @@ export default async function ContactPage() {
               )}
             </div>
           </div>
-        </FadeIn>
+        </div>
 
         {contact.inquiryCategories && contact.inquiryCategories.length > 0 && (
-          <StaggerChildren className="space-y-6">
+          <div className="space-y-6">
             <h2 className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Inquiries</h2>
             {contact.inquiryCategories.map((cat) => (
               <div key={cat.id} className="border-l-2 border-border pl-6">
@@ -89,7 +85,7 @@ export default async function ContactPage() {
                 )}
               </div>
             ))}
-          </StaggerChildren>
+          </div>
         )}
       </div>
     </section>

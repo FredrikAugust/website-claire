@@ -6,7 +6,7 @@ import { getPayloadClient } from '@/lib/payload'
 import type { Media as MediaType } from '@/payload-types'
 import type { Metadata } from 'next'
 
-export const dynamic = 'force-dynamic'
+export const revalidate = 60
 
 export const metadata: Metadata = {
   title: 'Claire Foody',
@@ -49,8 +49,6 @@ export default async function HomePage() {
         videoMimeType={heroVideo?.mimeType}
         fallbackImageUrl={fallbackImage?.url}
         fallbackImageAlt={fallbackImage?.alt}
-        title={home.hero?.title}
-        descriptor={home.hero?.descriptor}
       />
       <FeaturedWorks works={worksResult.docs.map(mapWorkToCard)} />
       <AboutPractice quote={home.aboutPractice?.quote} body={home.aboutPractice?.body} />

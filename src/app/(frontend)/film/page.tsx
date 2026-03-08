@@ -3,7 +3,7 @@ import { mapWorkToCard } from '@/lib/mapWorkToCard'
 import { getPayloadClient } from '@/lib/payload'
 import type { Metadata } from 'next'
 
-export const dynamic = 'force-dynamic'
+export const revalidate = 60
 
 export const metadata: Metadata = {
   title: 'Film',

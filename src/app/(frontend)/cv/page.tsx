@@ -1,9 +1,8 @@
 import { CVSection } from '@/components/CVSection'
-import { FadeIn } from '@/components/motion/FadeIn'
 import { getPayloadClient } from '@/lib/payload'
 import type { Metadata } from 'next'
 
-export const dynamic = 'force-dynamic'
+export const revalidate = 60
 
 export const metadata: Metadata = {
   title: 'CV',
@@ -18,9 +17,7 @@ export default async function CVPage() {
 
   return (
     <section className="mx-auto max-w-7xl px-6 py-24">
-      <FadeIn>
-        <h1 className="font-heading text-4xl md:text-5xl tracking-tight mb-16">Curriculum Vitae</h1>
-      </FadeIn>
+      <h1 className="font-heading text-4xl md:text-5xl tracking-tight mb-16">Curriculum Vitae</h1>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-16">
         <div className="lg:col-span-2">

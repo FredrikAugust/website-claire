@@ -5,31 +5,29 @@ import { getPayloadClient } from '@/lib/payload'
 import type { Media as MediaType } from '@/payload-types'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
+import { cache } from 'react'
 
-export const dynamic = 'force-dynamic'
+export const revalidate = 60
 
 interface PageProps {
   params: Promise<{ slug: string }>
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { slug } = await params
+const getWork = cache(async (slug: string) => {
   const payload = await getPayloadClient()
-
   const result = await payload.find({
     collection: 'works',
     where: { slug: { equals: slug } },
     limit: 1,
-    depth: 0,
-    select: {
-      title: true,
-      subtitle: true,
-      category: true,
-      year: true,
-    },
+    depth: 1,
   })
+  return result.docs[0] ?? null
+})
 
-  const work = result.docs[0]
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug } = await params
+  const work = await getWork(slug)
+
   if (!work) return { title: 'Not Found' }
 
   return {
@@ -53,18 +51,10 @@ export async function generateStaticParams() {
 
 export default async function WorkDetailPage({ params }: PageProps) {
   const { slug } = await params
-  const payload = await getPayloadClient()
-
-  const result = await payload.find({
-    collection: 'works',
-    where: { slug: { equals: slug } },
-    limit: 1,
-    depth: 1,
-  })
-
-  const work = result.docs[0]
+  const work = await getWork(slug)
   if (!work) notFound()
 
+  const payload = await getPayloadClient()
   const nextResult = await payload.find({
     collection: 'works',
     where: {

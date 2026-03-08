@@ -1,12 +1,10 @@
-import { HeroTitle } from './HeroTitle'
+import Image from 'next/image'
 
 interface HeroVideoProps {
   videoUrl?: string | null
   videoMimeType?: string | null
   fallbackImageUrl?: string | null
   fallbackImageAlt?: string
-  title?: string | null
-  descriptor?: string | null
 }
 
 export function HeroVideo({
@@ -14,8 +12,6 @@ export function HeroVideo({
   videoMimeType,
   fallbackImageUrl,
   fallbackImageAlt,
-  title,
-  descriptor,
 }: HeroVideoProps) {
   return (
     <section className="relative h-screen w-full overflow-hidden bg-foreground">
@@ -31,16 +27,16 @@ export function HeroVideo({
           <source src={videoUrl} type={videoMimeType ?? 'video/mp4'} />
         </video>
       ) : fallbackImageUrl ? (
-        <img
+        <Image
           src={fallbackImageUrl}
           alt={fallbackImageAlt ?? ''}
-          className="absolute inset-0 h-full w-full object-cover"
+          fill
+          className="object-cover"
+          priority
         />
       ) : null}
 
       <div className="absolute inset-0 bg-foreground/30" />
-
-      <HeroTitle title={title} descriptor={descriptor} />
     </section>
   )
 }

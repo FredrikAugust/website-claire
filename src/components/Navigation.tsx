@@ -12,9 +12,9 @@ const navLinks = [
 
 export function Navigation({ artistName }: { artistName: string }) {
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md border-b border-foreground/5">
+    <nav className="fixed top-0 left-0 right-0 z-50">
       <div className="mx-auto max-w-7xl flex items-center justify-between px-6 py-4">
-        <Link href="/" className="font-heading text-xl tracking-tight text-white">
+        <Link href="/" className="font-heading text-xl tracking-tight text-foreground">
           {artistName}
         </Link>
 
@@ -23,7 +23,7 @@ export function Navigation({ artistName }: { artistName: string }) {
             <Link
               key={link.href}
               href={link.href}
-              className="relative text-xs uppercase tracking-[0.2em] text-muted-foreground hover:text-foreground transition-colors after:absolute after:bottom-[-2px] after:left-0 after:h-px after:w-0 after:bg-foreground after:transition-all hover:after:w-full"
+              className="relative text-xs uppercase tracking-[0.2em] text-foreground hover:text-foreground transition-colors after:absolute after:-bottom-0.5 after:left-0 after:h-px after:w-0 after:bg-foreground after:transition-all hover:after:w-full"
             >
               {link.label}
             </Link>

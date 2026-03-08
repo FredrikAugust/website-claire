@@ -90,7 +90,7 @@ export function Footer({ siteSettings }: { siteSettings: SiteSettingsData }) {
         </div>
 
         <div className="mt-12 pt-8 border-t border-primary-foreground/10 text-xs text-primary-foreground/40">
-          &copy; {new Date().getFullYear()} {siteSettings.artistName}. All rights reserved.
+          &copy; 2026 {siteSettings.artistName}. All rights reserved.
         </div>
       </div>
     </footer>
