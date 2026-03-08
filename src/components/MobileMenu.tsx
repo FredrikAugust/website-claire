@@ -20,18 +20,16 @@ export function MobileMenu({ artistName, links }: MobileMenuProps) {
         aria-label={open ? 'Close menu' : 'Open menu'}
       >
         <span
-          className={`block h-px w-6 bg-foreground transition-transform ${open ? 'translate-y-[3.5px] rotate-45' : ''}`}
+          className={`block h-px w-6 bg-white transition-transform ${open ? 'translate-y-[3.5px] rotate-45' : ''}`}
         />
+        <span className={`block h-px w-6 bg-white transition-opacity ${open ? 'opacity-0' : ''}`} />
         <span
-          className={`block h-px w-6 bg-foreground transition-opacity ${open ? 'opacity-0' : ''}`}
-        />
-        <span
-          className={`block h-px w-6 bg-foreground transition-transform ${open ? '-translate-y-[3.5px] -rotate-45' : ''}`}
+          className={`block h-px w-6 bg-white transition-transform ${open ? '-translate-y-[3.5px] -rotate-45' : ''}`}
         />
       </button>
 
       <div
-        className={`fixed inset-0 top-0 z-40 bg-background transition-transform duration-300 ${open ? 'translate-x-0' : 'translate-x-full'}`}
+        className={`fixed inset-0 top-0 z-40 bg-background mix-blend-normal transition-transform duration-300 ${open ? 'translate-x-0' : 'translate-x-full'}`}
       >
         <div className="flex items-center justify-between px-6 py-4 border-b border-border/50">
           <Link
