@@ -69,7 +69,7 @@ export interface Config {
   collections: {
     users: User;
     media: Media;
-    installations: Installation;
+    works: Work;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -79,7 +79,7 @@ export interface Config {
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
-    installations: InstallationsSelect<false> | InstallationsSelect<true>;
+    works: WorksSelect<false> | WorksSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -91,9 +91,17 @@ export interface Config {
   fallbackLocale: null;
   globals: {
     home: Home;
+    'site-settings': SiteSetting;
+    about: About;
+    cv: Cv;
+    contact: Contact;
   };
   globalsSelect: {
     home: HomeSelect<false> | HomeSelect<true>;
+    'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
+    about: AboutSelect<false> | AboutSelect<true>;
+    cv: CvSelect<false> | CvSelect<true>;
+    contact: ContactSelect<false> | ContactSelect<true>;
   };
   locale: null;
   widgets: {
@@ -170,17 +178,35 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "installations".
+ * via the `definition` "works".
  */
-export interface Installation {
+export interface Work {
   id: number;
-  /**
-   * A lower number will make this appear higher in the list of installations.
-   */
-  index?: number | null;
   title: string;
-  subtitle: string;
-  summary: {
+  /**
+   * Auto-generated from title if left empty.
+   */
+  slug: string;
+  category: 'installation' | 'film' | 'performance';
+  /**
+   * Show on homepage featured grid.
+   */
+  featured?: boolean | null;
+  /**
+   * Lower numbers appear first.
+   */
+  sortOrder?: number | null;
+  year: number;
+  /**
+   * e.g. "Installation / Film / Performance"
+   */
+  medium?: string | null;
+  /**
+   * For film/performance, e.g. "12'30\""
+   */
+  duration?: string | null;
+  subtitle?: string | null;
+  description?: {
     root: {
       type: string;
       children: {
@@ -194,9 +220,54 @@ export interface Installation {
       version: number;
     };
     [k: string]: unknown;
-  };
+  } | null;
+  venue?: string | null;
   /**
-   * Additional files the visitor can download. Such as slide decks.
+   * e.g. "Basel, Switzerland"
+   */
+  venueLocation?: string | null;
+  /**
+   * Main image, 16:9 recommended.
+   */
+  heroImage?: (number | null) | Media;
+  /**
+   * Card thumbnail, 4:3 recommended.
+   */
+  thumbnailImage?: (number | null) | Media;
+  /**
+   * Vimeo embed URL
+   */
+  vimeoUrl?: string | null;
+  collaborators?:
+    | {
+        name: string;
+        role: string;
+        id?: string | null;
+      }[]
+    | null;
+  performers?:
+    | {
+        name: string;
+        id?: string | null;
+      }[]
+    | null;
+  screenings?:
+    | {
+        festival: string;
+        location: string;
+        year: number;
+        id?: string | null;
+      }[]
+    | null;
+  gallery?:
+    | {
+        image: number | Media;
+        caption?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Downloadable resources.
    */
   files?:
     | {
@@ -241,8 +312,8 @@ export interface PayloadLockedDocument {
         value: number | Media;
       } | null)
     | ({
-        relationTo: 'installations';
-        value: number | Installation;
+        relationTo: 'works';
+        value: number | Work;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -329,13 +400,52 @@ export interface MediaSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "installations_select".
+ * via the `definition` "works_select".
  */
-export interface InstallationsSelect<T extends boolean = true> {
-  index?: T;
+export interface WorksSelect<T extends boolean = true> {
   title?: T;
+  slug?: T;
+  category?: T;
+  featured?: T;
+  sortOrder?: T;
+  year?: T;
+  medium?: T;
+  duration?: T;
   subtitle?: T;
-  summary?: T;
+  description?: T;
+  venue?: T;
+  venueLocation?: T;
+  heroImage?: T;
+  thumbnailImage?: T;
+  vimeoUrl?: T;
+  collaborators?:
+    | T
+    | {
+        name?: T;
+        role?: T;
+        id?: T;
+      };
+  performers?:
+    | T
+    | {
+        name?: T;
+        id?: T;
+      };
+  screenings?:
+    | T
+    | {
+        festival?: T;
+        location?: T;
+        year?: T;
+        id?: T;
+      };
+  gallery?:
+    | T
+    | {
+        image?: T;
+        caption?: T;
+        id?: T;
+      };
   files?:
     | T
     | {
@@ -392,9 +502,24 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
  */
 export interface Home {
   id: number;
-  hero: {
-    title: string;
-    description: {
+  hero?: {
+    /**
+     * MP4 video for hero background.
+     */
+    video?: (number | null) | Media;
+    /**
+     * Poster/fallback image when video is unavailable.
+     */
+    fallbackImage?: (number | null) | Media;
+    title?: string | null;
+    descriptor?: string | null;
+  };
+  aboutPractice?: {
+    /**
+     * Blockquote text for homepage about section.
+     */
+    quote?: string | null;
+    body?: {
       root: {
         type: string;
         children: {
@@ -408,12 +533,56 @@ export interface Home {
         version: number;
       };
       [k: string]: unknown;
-    };
-    image: number | Media;
+    } | null;
   };
-  carousel: (number | Media)[];
-  aboutMe: {
-    description: {
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-settings".
+ */
+export interface SiteSetting {
+  id: number;
+  artistName: string;
+  /**
+   * Short descriptor, e.g. "Canadian artist based in Europe"
+   */
+  artistDescriptor?: string | null;
+  email?: string | null;
+  phone?: string | null;
+  vimeoUrl?: string | null;
+  instagramUrl?: string | null;
+  footerBio?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "about".
+ */
+export interface About {
+  id: number;
+  portrait?: (number | null) | Media;
+  headline?: string | null;
+  bio?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  approach?: {
+    title?: string | null;
+    content?: {
       root: {
         type: string;
         children: {
@@ -427,13 +596,64 @@ export interface Home {
         version: number;
       };
       [k: string]: unknown;
-    };
+    } | null;
   };
-  contact: {
-    phone: string;
-    email: string;
-    image: number | Media;
-  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "cv".
+ */
+export interface Cv {
+  id: number;
+  sections?:
+    | {
+        title: string;
+        entries?:
+          | {
+              year: number;
+              title: string;
+              venue?: string | null;
+              location?: string | null;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  sidebarSections?:
+    | {
+        title: string;
+        entries?:
+          | {
+              year: number;
+              title: string;
+              details?: string | null;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact".
+ */
+export interface Contact {
+  id: number;
+  heading?: string | null;
+  description?: string | null;
+  inquiryCategories?:
+    | {
+        title: string;
+        description?: string | null;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -445,22 +665,106 @@ export interface HomeSelect<T extends boolean = true> {
   hero?:
     | T
     | {
+        video?: T;
+        fallbackImage?: T;
+        title?: T;
+        descriptor?: T;
+      };
+  aboutPractice?:
+    | T
+    | {
+        quote?: T;
+        body?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-settings_select".
+ */
+export interface SiteSettingsSelect<T extends boolean = true> {
+  artistName?: T;
+  artistDescriptor?: T;
+  email?: T;
+  phone?: T;
+  vimeoUrl?: T;
+  instagramUrl?: T;
+  footerBio?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "about_select".
+ */
+export interface AboutSelect<T extends boolean = true> {
+  portrait?: T;
+  headline?: T;
+  bio?: T;
+  approach?:
+    | T
+    | {
+        title?: T;
+        content?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "cv_select".
+ */
+export interface CvSelect<T extends boolean = true> {
+  sections?:
+    | T
+    | {
+        title?: T;
+        entries?:
+          | T
+          | {
+              year?: T;
+              title?: T;
+              venue?: T;
+              location?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  sidebarSections?:
+    | T
+    | {
+        title?: T;
+        entries?:
+          | T
+          | {
+              year?: T;
+              title?: T;
+              details?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact_select".
+ */
+export interface ContactSelect<T extends boolean = true> {
+  heading?: T;
+  description?: T;
+  inquiryCategories?:
+    | T
+    | {
         title?: T;
         description?: T;
-        image?: T;
-      };
-  carousel?: T;
-  aboutMe?:
-    | T
-    | {
-        description?: T;
-      };
-  contact?:
-    | T
-    | {
-        phone?: T;
-        email?: T;
-        image?: T;
+        id?: T;
       };
   updatedAt?: T;
   createdAt?: T;
