@@ -1,9 +1,5 @@
-import dynamic from 'next/dynamic'
 import Link from 'next/link'
-
-const MobileMenu = dynamic(() => import('./MobileMenu').then((m) => m.MobileMenu), {
-  ssr: false,
-})
+import { MobileMenu } from './MobileMenu'
 
 const navLinks = [
   { href: '/works', label: 'Works' },
