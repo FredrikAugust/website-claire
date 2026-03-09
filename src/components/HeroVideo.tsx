@@ -23,6 +23,7 @@ export function HeroVideo({
           playsInline
           poster={fallbackImageUrl ?? undefined}
           className="absolute inset-0 h-full w-full object-cover grayscale"
+          preload="auto"
         >
           <source src={videoUrl} type={videoMimeType ?? 'video/mp4'} />
         </video>
