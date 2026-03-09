@@ -1,3 +1,4 @@
+import { Navigation } from '@/components/Navigation'
 import { ProjectHero } from '@/components/ProjectHero'
 import { ProjectInfo } from '@/components/ProjectInfo'
 import { ProjectNavigation } from '@/components/ProjectNavigation'
@@ -71,6 +72,7 @@ export default async function WorkDetailPage({ params }: PageProps) {
 
   return (
     <>
+      <Navigation />
       {heroImage && <ProjectHero image={heroImage} />}
       <ProjectInfo work={work} />
       <ProjectNavigation nextWork={nextResult.docs[0] ?? null} category={work.category} />

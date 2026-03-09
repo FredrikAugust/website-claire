@@ -1,4 +1,5 @@
 import { CVSection } from '@/components/CVSection'
+import { Navigation } from '@/components/Navigation'
 import { getPayloadClient } from '@/lib/payload'
 import type { Metadata } from 'next'
 
@@ -16,27 +17,30 @@ export default async function CVPage() {
   const cv = await payload.findGlobal({ slug: 'cv', depth: 0 })
 
   return (
-    <section className="mx-auto max-w-7xl px-6 py-24">
-      <h1 className="font-heading text-4xl md:text-5xl tracking-tight mb-16">Curriculum Vitae</h1>
+    <>
+      <Navigation />
+      <section className="mx-auto max-w-7xl px-6 py-24">
+        <h1 className="font-heading text-4xl md:text-5xl tracking-tight mb-16">Curriculum Vitae</h1>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-16">
-        <div className="lg:col-span-2">
-          {cv.sections?.map((section) => (
-            <CVSection key={section.id} title={section.title} entries={section.entries ?? []} />
-          ))}
-        </div>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-16">
+          <div className="lg:col-span-2">
+            {cv.sections?.map((section) => (
+              <CVSection key={section.id} title={section.title} entries={section.entries ?? []} />
+            ))}
+          </div>
 
-        <div>
-          {cv.sidebarSections?.map((section) => (
-            <CVSection
-              key={section.id}
-              title={section.title}
-              entries={section.entries ?? []}
-              compact
-            />
-          ))}
+          <div>
+            {cv.sidebarSections?.map((section) => (
+              <CVSection
+                key={section.id}
+                title={section.title}
+                entries={section.entries ?? []}
+                compact
+              />
+            ))}
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   )
 }

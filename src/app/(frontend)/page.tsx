@@ -1,6 +1,7 @@
 import { AboutPractice } from '@/components/AboutPractice'
 import { FeaturedWorks } from '@/components/FeaturedWorks'
 import { HeroVideo } from '@/components/HeroVideo'
+import { Navigation } from '@/components/Navigation'
 import { mapWorkToCard } from '@/lib/mapWorkToCard'
 import { getPayloadClient } from '@/lib/payload'
 import type { Media as MediaType } from '@/payload-types'
@@ -44,6 +45,7 @@ export default async function HomePage() {
 
   return (
     <>
+      <Navigation variant="light" />
       <HeroVideo
         videoUrl={heroVideo?.url}
         videoMimeType={heroVideo?.mimeType}

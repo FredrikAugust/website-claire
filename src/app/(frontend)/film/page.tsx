@@ -1,3 +1,4 @@
+import { Navigation } from '@/components/Navigation'
 import { WorksGrid } from '@/components/WorksGrid'
 import { mapWorkToCard } from '@/lib/mapWorkToCard'
 import { getPayloadClient } from '@/lib/payload'
@@ -33,5 +34,10 @@ export default async function FilmPage() {
     },
   })
 
-  return <WorksGrid works={works.docs.map(mapWorkToCard)} title="Film" />
+  return (
+    <>
+      <Navigation />
+      <WorksGrid works={works.docs.map(mapWorkToCard)} title="Film" />
+    </>
+  )
 }

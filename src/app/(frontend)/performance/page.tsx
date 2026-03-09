@@ -1,3 +1,4 @@
+import { Navigation } from '@/components/Navigation'
 import { WorksGrid } from '@/components/WorksGrid'
 import { mapWorkToCard } from '@/lib/mapWorkToCard'
 import { getPayloadClient } from '@/lib/payload'
@@ -33,5 +34,10 @@ export default async function PerformancePage() {
     },
   })
 
-  return <WorksGrid works={works.docs.map(mapWorkToCard)} title="Performance" />
+  return (
+    <>
+      <Navigation />
+      <WorksGrid works={works.docs.map(mapWorkToCard)} title="Performance" />
+    </>
+  )
 }

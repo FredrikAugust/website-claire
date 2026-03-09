@@ -1,5 +1,4 @@
 import { Footer } from '@/components/Footer'
-import { Navigation } from '@/components/Navigation'
 import { getPayloadClient } from '@/lib/payload'
 import type { Metadata } from 'next'
 import { Bodoni_Moda, Karla } from 'next/font/google'
@@ -52,7 +51,6 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${bodoniModa.variable} ${karla.variable}`}>
       <body className="bg-foreground">
-        <Navigation artistName={siteSettings.artistName} />
         <main className="bg-background">{children}</main>
         <Footer siteSettings={siteSettings} />
       </body>

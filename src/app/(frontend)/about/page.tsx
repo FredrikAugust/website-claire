@@ -1,3 +1,4 @@
+import { Navigation } from '@/components/Navigation'
 import { getPayloadClient } from '@/lib/payload'
 import type { Media } from '@/payload-types'
 import { RichText } from '@payloadcms/richtext-lexical/react'
@@ -19,45 +20,48 @@ export default async function AboutPage() {
   const portrait = about.portrait as Media | null
 
   return (
-    <section className="mx-auto max-w-7xl px-6 py-24">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-        {portrait?.url && (
-          <div className="relative aspect-3/4 bg-secondary">
-            <Image
-              src={portrait.url}
-              alt={portrait.alt}
-              fill
-              sizes="(max-width: 1024px) 100vw, 50vw"
-              className="object-cover"
-              priority
-            />
+    <>
+      <Navigation />
+      <section className="mx-auto max-w-7xl px-6 py-24">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+          {portrait?.url && (
+            <div className="relative aspect-3/4 bg-secondary">
+              <Image
+                src={portrait.url}
+                alt={portrait.alt}
+                fill
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                className="object-cover"
+                priority
+              />
+            </div>
+          )}
+
+          <div className="flex flex-col justify-center">
+            {about.headline && (
+              <h1 className="font-heading text-4xl md:text-5xl tracking-tight mb-8">
+                {about.headline}
+              </h1>
+            )}
+            {about.bio && (
+              <div className="text-foreground/80 leading-relaxed space-y-4">
+                <RichText data={about.bio} />
+              </div>
+            )}
+          </div>
+        </div>
+
+        {about.approach?.title && (
+          <div className="mt-24 max-w-3xl">
+            <h2 className="font-heading text-3xl tracking-tight mb-6">{about.approach.title}</h2>
+            {about.approach.content && (
+              <div className="text-foreground/80 leading-relaxed">
+                <RichText data={about.approach.content} />
+              </div>
+            )}
           </div>
         )}
-
-        <div className="flex flex-col justify-center">
-          {about.headline && (
-            <h1 className="font-heading text-4xl md:text-5xl tracking-tight mb-8">
-              {about.headline}
-            </h1>
-          )}
-          {about.bio && (
-            <div className="text-foreground/80 leading-relaxed space-y-4">
-              <RichText data={about.bio} />
-            </div>
-          )}
-        </div>
-      </div>
-
-      {about.approach?.title && (
-        <div className="mt-24 max-w-3xl">
-          <h2 className="font-heading text-3xl tracking-tight mb-6">{about.approach.title}</h2>
-          {about.approach.content && (
-            <div className="text-foreground/80 leading-relaxed">
-              <RichText data={about.approach.content} />
-            </div>
-          )}
-        </div>
-      )}
-    </section>
+      </section>
+    </>
   )
 }
