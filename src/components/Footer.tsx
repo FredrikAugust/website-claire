@@ -33,7 +33,7 @@ export function Footer({ siteSettings }: { siteSettings: SiteSettingsData }) {
           </div>
 
           <div>
-            <h4 className="text-xs uppercase tracking-[0.2em] mb-4 text-primary-foreground/50">
+            <h4 className="text-xs uppercase tracking-[0.2em] mb-4 text-primary-foreground">
               Navigation
             </h4>
             <nav className="flex flex-col gap-2">
@@ -50,7 +50,7 @@ export function Footer({ siteSettings }: { siteSettings: SiteSettingsData }) {
           </div>
 
           <div>
-            <h4 className="text-xs uppercase tracking-[0.2em] mb-4 text-primary-foreground/50">
+            <h4 className="text-xs uppercase tracking-[0.2em] mb-4 text-primary-foreground">
               Contact
             </h4>
             <div className="flex flex-col gap-2 text-sm text-primary-foreground/85">

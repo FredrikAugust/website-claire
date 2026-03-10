@@ -36,6 +36,7 @@ export default async function HomePage() {
         venue: true,
         thumbnailImage: true,
         heroImage: true,
+        subtitle: true
       },
     }),
   ])

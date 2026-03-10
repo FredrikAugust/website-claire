@@ -13,7 +13,7 @@ export function FeaturedWorks({
 
   return (
     <section className="mx-auto max-w-7xl px-6 py-24">
-      <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-4">
+      <p className="text-sm uppercase tracking-[0.2em] text-muted-foreground mb-2">
         Selected Works
       </p>
       {descriptor && (
@@ -36,16 +36,17 @@ export function FeaturedWorks({
               />
             </div>
           )}
-          <div className="flex flex-wrap items-baseline gap-6">
-            <span className="text-xs uppercase tracking-[0.15em] text-muted-foreground">
-              {first.year}
-            </span>
-            <h3 className="font-heading text-2xl md:text-3xl tracking-tight group-hover:text-muted-foreground transition-colors">
-              {first.title}
-            </h3>
-            <span className="text-xs uppercase tracking-[0.15em] text-muted-foreground">
-              {first.category}
-            </span>
+          <div className="flex flex-wrap items-baseline gap-1 flex-col">
+            <span className="text-muted-foreground">{first.year}</span>
+            <div className="flex md:flex-row flex-col gap-4 justify-between w-full">
+              <div className="flex flex-col gap-1">
+                <h3 className="font-heading text-2xl md:text-3xl tracking-tight group-hover:text-foreground transition-colors">
+                  {first.title}
+                </h3>
+                <span className="text-md capitalize text-muted-foreground">{first.category}</span>
+              </div>
+              <p className="text-muted-foreground max-w-sm text-md">{first.subtitle}</p>
+            </div>
           </div>
         </Link>
       )}

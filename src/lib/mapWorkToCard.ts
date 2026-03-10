@@ -11,6 +11,7 @@ interface WorkForCard {
   venue?: string | null
   thumbnailImage?: number | Media | null
   heroImage?: number | Media | null
+  subtitle?: string | null
 }
 
 export function mapWorkToCard(work: WorkForCard): WorkCardData {
@@ -28,5 +29,6 @@ export function mapWorkToCard(work: WorkForCard): WorkCardData {
     venue: work.venue,
     imageUrl: image?.url ?? null,
     imageAlt: image?.alt,
+    subtitle: work?.subtitle
   }
 }

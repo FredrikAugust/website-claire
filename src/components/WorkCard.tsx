@@ -11,6 +11,7 @@ export interface WorkCardData {
   venue?: string | null
   imageUrl?: string | null
   imageAlt?: string
+  subtitle?: string | null
 }
 
 export function WorkCard({ work }: { work: WorkCardData }) {
@@ -42,9 +43,6 @@ export function WorkCard({ work }: { work: WorkCardData }) {
           </h3>
           {work.medium && <p className="text-sm text-muted-foreground">{work.medium}</p>}
           {work.venue && <p className="text-sm text-muted-foreground">{work.venue}</p>}
-          <span className="inline-block mt-2 text-xs uppercase tracking-[0.15em] text-foreground group-hover:tracking-[0.25em] transition-all">
-            View Project &rarr;
-          </span>
         </div>
       </Link>
     </div>
