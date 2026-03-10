@@ -95,6 +95,9 @@ export interface Config {
     about: About;
     cv: Cv;
     contact: Contact;
+    'performance-page': PerformancePage;
+    'film-page': FilmPage;
+    'works-page': WorksPage;
   };
   globalsSelect: {
     home: HomeSelect<false> | HomeSelect<true>;
@@ -102,6 +105,9 @@ export interface Config {
     about: AboutSelect<false> | AboutSelect<true>;
     cv: CvSelect<false> | CvSelect<true>;
     contact: ContactSelect<false> | ContactSelect<true>;
+    'performance-page': PerformancePageSelect<false> | PerformancePageSelect<true>;
+    'film-page': FilmPageSelect<false> | FilmPageSelect<true>;
+    'works-page': WorksPageSelect<false> | WorksPageSelect<true>;
   };
   locale: null;
   widgets: {
@@ -613,9 +619,20 @@ export interface Cv {
         entries?:
           | {
               year: number;
+              /**
+               * End year for ranges, e.g. 2025–2026
+               */
+              yearEnd?: number | null;
               title: string;
               venue?: string | null;
               location?: string | null;
+              pieces?:
+                | {
+                    name: string;
+                    role?: string | null;
+                    id?: string | null;
+                  }[]
+                | null;
               id?: string | null;
             }[]
           | null;
@@ -628,8 +645,19 @@ export interface Cv {
         entries?:
           | {
               year: number;
+              /**
+               * End year for ranges, e.g. 2025–2026
+               */
+              yearEnd?: number | null;
               title: string;
               details?: string | null;
+              pieces?:
+                | {
+                    name: string;
+                    role?: string | null;
+                    id?: string | null;
+                  }[]
+                | null;
               id?: string | null;
             }[]
           | null;
@@ -654,6 +682,70 @@ export interface Contact {
         id?: string | null;
       }[]
     | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "performance-page".
+ */
+export interface PerformancePage {
+  id: number;
+  heading?: string | null;
+  description?: string | null;
+  backgroundTitle?: string | null;
+  /**
+   * Dance training and background bio text.
+   */
+  backgroundContent?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  affiliations?:
+    | {
+        organization: string;
+        role?: string | null;
+        years?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  ctaTitle?: string | null;
+  ctaDescription?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "film-page".
+ */
+export interface FilmPage {
+  id: number;
+  heading?: string | null;
+  description?: string | null;
+  ctaTitle?: string | null;
+  ctaDescription?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "works-page".
+ */
+export interface WorksPage {
+  id: number;
+  heading?: string | null;
+  description?: string | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -727,9 +819,17 @@ export interface CvSelect<T extends boolean = true> {
           | T
           | {
               year?: T;
+              yearEnd?: T;
               title?: T;
               venue?: T;
               location?: T;
+              pieces?:
+                | T
+                | {
+                    name?: T;
+                    role?: T;
+                    id?: T;
+                  };
               id?: T;
             };
         id?: T;
@@ -742,8 +842,16 @@ export interface CvSelect<T extends boolean = true> {
           | T
           | {
               year?: T;
+              yearEnd?: T;
               title?: T;
               details?: T;
+              pieces?:
+                | T
+                | {
+                    name?: T;
+                    role?: T;
+                    id?: T;
+                  };
               id?: T;
             };
         id?: T;
@@ -766,6 +874,53 @@ export interface ContactSelect<T extends boolean = true> {
         description?: T;
         id?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "performance-page_select".
+ */
+export interface PerformancePageSelect<T extends boolean = true> {
+  heading?: T;
+  description?: T;
+  backgroundTitle?: T;
+  backgroundContent?: T;
+  affiliations?:
+    | T
+    | {
+        organization?: T;
+        role?: T;
+        years?: T;
+        id?: T;
+      };
+  ctaTitle?: T;
+  ctaDescription?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "film-page_select".
+ */
+export interface FilmPageSelect<T extends boolean = true> {
+  heading?: T;
+  description?: T;
+  ctaTitle?: T;
+  ctaDescription?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "works-page_select".
+ */
+export interface WorksPageSelect<T extends boolean = true> {
+  heading?: T;
+  description?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

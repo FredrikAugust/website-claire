@@ -12,8 +12,11 @@ import { Work } from './collections/Work'
 import { About } from './globals/About'
 import { CV } from './globals/CV'
 import { Contact } from './globals/Contact'
+import { Film as FilmGlobal } from './globals/Film'
 import { Home } from './globals/Home'
+import { Performance as PerformanceGlobal } from './globals/Performance'
 import { SiteSettings } from './globals/SiteSettings'
+import { Works as WorksGlobal } from './globals/Works'
 import { migrations } from './migrations'
 
 const filename = fileURLToPath(import.meta.url)
@@ -28,7 +31,7 @@ export default buildConfig({
   },
   serverURL: process.env.SERVER_URL!,
   collections: [Users, Media, Work],
-  globals: [Home, SiteSettings, About, CV, Contact],
+  globals: [Home, SiteSettings, About, CV, Contact, PerformanceGlobal, FilmGlobal, WorksGlobal],
   maxDepth: 2,
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || 'dev-secret-change-me',

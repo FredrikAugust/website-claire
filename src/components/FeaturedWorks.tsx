@@ -1,24 +1,70 @@
+import Image from 'next/image'
 import Link from 'next/link'
-import { WorkCard, type WorkCardData } from './WorkCard'
+import type { WorkCardData } from './WorkCard'
+import { WorkCard } from './WorkCard'
 
-export function FeaturedWorks({ works }: { works: WorkCardData[] }) {
+export function FeaturedWorks({
+  works,
+  descriptor,
+}: { works: WorkCardData[]; descriptor?: string | null }) {
   if (!works.length) return null
+
+  const [first, ...rest] = works
 
   return (
     <section className="mx-auto max-w-7xl px-6 py-24">
-      <div className="flex items-end justify-between mb-16">
-        <h2 className="font-heading text-3xl md:text-4xl tracking-tight">Selected Works</h2>
+      <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-4">
+        Selected Works
+      </p>
+      {descriptor && (
+        <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl tracking-tight mb-16">
+          {descriptor}
+        </h2>
+      )}
+
+      {first && (
+        <Link href={`/works/${first.slug}`} className="group block mb-16">
+          {first.imageUrl && (
+            <div className="aspect-video relative overflow-hidden bg-secondary mb-6">
+              <Image
+                src={first.imageUrl}
+                alt={first.imageAlt ?? first.title}
+                fill
+                sizes="100vw"
+                className="object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                priority
+              />
+            </div>
+          )}
+          <div className="flex flex-wrap items-baseline gap-6">
+            <span className="text-xs uppercase tracking-[0.15em] text-muted-foreground">
+              {first.year}
+            </span>
+            <h3 className="font-heading text-2xl md:text-3xl tracking-tight group-hover:text-muted-foreground transition-colors">
+              {first.title}
+            </h3>
+            <span className="text-xs uppercase tracking-[0.15em] text-muted-foreground">
+              {first.category}
+            </span>
+          </div>
+        </Link>
+      )}
+
+      {rest.length > 0 && (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-16 mb-16">
+          {rest.map((work) => (
+            <WorkCard key={work.id} work={work} />
+          ))}
+        </div>
+      )}
+
+      <div className="text-right">
         <Link
           href="/works"
           className="text-xs uppercase tracking-[0.2em] text-muted-foreground hover:text-foreground transition-colors"
         >
-          View All &rarr;
+          View All Works &rarr;
         </Link>
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
-        {works.map((work) => (
-          <WorkCard key={work.id} work={work} />
-        ))}
       </div>
     </section>
   )

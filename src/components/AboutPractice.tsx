@@ -1,5 +1,6 @@
 import type { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
 import { RichText } from '@payloadcms/richtext-lexical/react'
+import Link from 'next/link'
 
 interface AboutPracticeProps {
   quote?: string | null
@@ -22,6 +23,14 @@ export function AboutPractice({ quote, body }: AboutPracticeProps) {
             <RichText data={body} />
           </div>
         )}
+        <div className="mt-8">
+          <Link
+            href="/about"
+            className="text-xs uppercase tracking-[0.2em] hover:tracking-[0.3em] transition-all"
+          >
+            Read More &rarr;
+          </Link>
+        </div>
       </div>
     </section>
   )

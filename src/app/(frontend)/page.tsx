@@ -52,7 +52,10 @@ export default async function HomePage() {
         fallbackImageUrl={fallbackImage?.url}
         fallbackImageAlt={fallbackImage?.alt}
       />
-      <FeaturedWorks works={worksResult.docs.map(mapWorkToCard)} />
+      <FeaturedWorks
+        works={worksResult.docs.map(mapWorkToCard)}
+        descriptor={home.hero?.descriptor}
+      />
       <AboutPractice quote={home.aboutPractice?.quote} body={home.aboutPractice?.body} />
     </>
   )

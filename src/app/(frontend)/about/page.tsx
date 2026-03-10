@@ -4,6 +4,7 @@ import type { Media } from '@/payload-types'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 import type { Metadata } from 'next'
 import Image from 'next/image'
+import Link from 'next/link'
 
 export const revalidate = 60
 
@@ -48,6 +49,21 @@ export default async function AboutPage() {
                 <RichText data={about.bio} />
               </div>
             )}
+
+            <div className="flex gap-8 mt-10">
+              <Link
+                href="/cv"
+                className="text-xs uppercase tracking-[0.2em] hover:tracking-[0.3em] transition-all"
+              >
+                View CV &rarr;
+              </Link>
+              <Link
+                href="/contact"
+                className="text-xs uppercase tracking-[0.2em] hover:tracking-[0.3em] transition-all"
+              >
+                Contact &rarr;
+              </Link>
+            </div>
           </div>
         </div>
 
