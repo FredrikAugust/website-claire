@@ -1,5 +1,6 @@
 import { Footer } from '@/components/Footer'
 import { getPayloadClient } from '@/lib/payload'
+import { Analytics } from '@vercel/analytics/next'
 import type { Metadata } from 'next'
 import { Bodoni_Moda, Karla } from 'next/font/google'
 import type React from 'react'
@@ -53,6 +54,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
       <body className="bg-foreground">
         <main className="bg-background">{children}</main>
         <Footer siteSettings={siteSettings} />
+        <Analytics />
       </body>
     </html>
   )
